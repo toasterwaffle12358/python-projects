@@ -1,0 +1,108 @@
+import pygame as pygame
+import time as time
+
+pygame.init()
+
+t = 1
+dotx=1
+doty=1
+
+runloop = 1
+
+paused = False
+
+fadeimg = pygame.image.load("fade.png")
+
+r=255
+g=0
+b=0
+dotcolor = (r, g, b)
+rloop = False
+gloop = False
+bloop = False
+canforloop = True
+
+screen = pygame.display.set_mode([600,600])
+screen.fill((0, 0, 0))
+running = True
+while running:
+
+  #checking for pause button
+  for event in pygame.event.get():
+    if event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_p:
+        paused = True
+  
+  #pause loop
+  while paused:
+    for event in pygame.event.get():
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_p:
+          paused = False
+
+  #math equation
+  for x in range(1100):
+    doty = doty * t - dotx
+    dotx = dotx -t + doty
+    canforloop = False
+    t = t + 0.00001
+e a browser error, it's possible that your ISP have security settings blocking th
+    doty1 = doty
+    dotx1 = dotx
+
+    dotxfinal = dotx1 +300
+    dotyfinal = doty1 +300
+
+    pygame.draw.circle(screen, (255, 255, 255), (dotxfinal,dotyfinal), 3)
+  doty = 1
+  dotx = 1
+  t = t + 0.00001
+
+  doty1 = doty
+  dotx1 = dotx
+
+  dotxfinal = dotx1 +300
+  dotyfinal = doty1 +300
+  
+  
+  t = t + 0.00001
+
+
+  #changing circle color over time for red
+  if not rloop:
+    r = r - 0.8
+  if rloop:
+    r = r + 0.8
+  
+  #chaning circle color over time for green
+  if not gloop:
+    g = g + 0.8
+  if gloop:
+    g = g - 0.8
+  
+  #changing circle color over time for blue
+  if not bloop:
+    b = b + 0.4
+  if bloop:
+    b = b - 0.4
+
+
+  #addling loop functionality for color changing
+  if r == 5:
+    rloop = True
+  if r == 250: 
+    rloop = False
+  if g == 250:
+    gloop = True
+  if b == 250:
+    bloop = True
+
+  screen.blit(fadeimg, (0, 0))
+
+  #drawing circle
+  pygame.draw.circle(screen, (255, 255, 255), (dotxfinal,dotyfinal), 3)
+
+
+  #final prep stuff
+  pygame.display.flip()
+  time.sleep(0.001)
